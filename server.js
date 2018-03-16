@@ -52,14 +52,16 @@ app.get("/api/statuses", function(req, res) {
   });
 });
 
-app.post("/api/contacts", function(req, res) {
-  var newContact = req.body;
+app.post("/api/statuses", function(req, res) {
+  var newStatus = req.body;
+  newStatus.last_update = new Date(Date.now()).toISOString();
+  newStatus.creation = new Date(Date.now()).toISOString();
 
   if (!req.body.title) {
     handleError(res, "Invalid user input", "Must provide a title for daily status.", 400);
   }
 
-  db.collection(STATUSES_COLLECTION).insertOne(newContact, function(err, doc) {
+  db.collection(STATUSES_COLLECTION).insertOne(newStatus, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new daily status entry.");
     } else {
