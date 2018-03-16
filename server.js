@@ -55,8 +55,8 @@ app.get("/api/statuses", function(req, res) {
 app.post("/api/contacts", function(req, res) {
   var newContact = req.body;
 
-  if (!req.body.name) {
-    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  if (!req.body.title) {
+    handleError(res, "Invalid user input", "Must provide a title for daily status.", 400);
   }
 
   db.collection(STATUSES_COLLECTION).insertOne(newContact, function(err, doc) {
