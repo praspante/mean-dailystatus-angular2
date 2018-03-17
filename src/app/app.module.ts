@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { StatusDetailsComponent } from './statuses/status-details/status-details.component';
-import { StatusListComponent } from './statues/status-list/status-list.component';
+import { StatusListComponent } from './statuses/status-list/status-list.component';
 
 
 @NgModule({
