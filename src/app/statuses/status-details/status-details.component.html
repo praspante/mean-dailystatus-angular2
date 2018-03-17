@@ -1,3 +1,30 @@
-<p>
-  status-details works!
-</p>
+<div *ngIf="status" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="status._id">Status Details</h2>
+    <h2 *ngIf="!status._id">New Status</h2>
+  </div>
+</div>
+<div *ngIf="status" class="row">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="status-title">Title</label>
+      <input class="form-control" name="status-title" [(ngModel)]="status.title" placeholder="Title"/>
+    </div>
+    <div class="form-group">
+      <label for="status-creation">Creation Date</label>
+      <input class="form-control" name="status-creation" [(ngModel)]="status.creation" readonly/>
+    </div>
+    <div class="form-group">
+      <label for="status-last_update">Last Update Date</label>
+      <input class="form-control" name="status-last_update" [(ngModel)]="status.last_update" readonly/>
+    </div>
+    <div class="form-group">
+      <label for="status-text">Text</label>
+      <input class="form-control" name="status-text" [(ngModel)]="status.text" placeholder="..."/>
+    </div>
+    <button class="btn btn-primary" *ngIf="!status._id" (click)="createStatus(status)">Create</button>
+    <button class="btn btn-info" *ngIf="status._id" (click)="updateStatus(status)">Update</button>
+    <button class="btn btn-danger" *ngIf="status._id" (click)="deleteStatus(status._id)">Delete</button>
+  </form>
+</div>
+

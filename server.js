@@ -8,6 +8,10 @@ var STATUSES_COLLECTION = "statuses";
 var app = express();
 app.use(bodyParser.json());
 
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
@@ -77,11 +81,38 @@ app.post("/api/statuses", function(req, res) {
  */
 
 app.get("/api/statuses/:id", function(req, res) {
+  db.collection(STATUSES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get status");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
 });
 
 app.put("/api/statuses/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  // Update last_update to indicate that this daily status idtem was updated
+  updateDoc.last_update = new Date(Date.now()).toISOString();
+
+  db.collection(STATUSES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update status");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
 });
 
 app.delete("/api/statuses/:id", function(req, res) {
+  db.collection(STATUSES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete status");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
 });
-

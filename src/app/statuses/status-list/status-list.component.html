@@ -1,3 +1,22 @@
-<p>
-  status-list works!
-</p>
+<div class="row">
+  <div class="col-md-5">
+    <h2>Daily Status Log</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let status of statuses"
+        (click)="selectStatus(status)"
+        [class.active]="status === selectedStatus">
+        {{status.title}}
+      </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewStatus()">New</button>
+  </div>
+  <div class="col-md-5 col-md-offset-2">
+    <status-details
+      [status]="selectedStatus"
+      [createHandler]="addStatus"
+      [updateHandler]="updateStatus"
+      [deleteHandler]="deleteStatus">
+    </status-details>
+  </div>
+</div
