@@ -10,7 +10,7 @@ export class StatusService {
     constructor (private http: Http) {}
 
     // get("/api/contacts")
-    getStatuses(): Promise<void | Contact[]> {
+    getStatuses(): Promise<void | Status[]> {
       return this.http.get(this.statusesUrl)
                  .toPromise()
                  .then(response => response.json() as Status[])
@@ -29,7 +29,7 @@ export class StatusService {
 
     // delete("/api/statuses/:id")
     deleteStatus(delStatusId: String): Promise<void | String> {
-      return this.http.delete(this.statusessUrl + '/' + delStatusId)
+      return this.http.delete(this.statusesUrl + '/' + delStatusId)
                  .toPromise()
                  .then(response => response.json() as String)
                  .catch(this.handleError);

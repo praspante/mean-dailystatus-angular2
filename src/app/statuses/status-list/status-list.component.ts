@@ -47,8 +47,8 @@ export class StatusListComponent implements OnInit {
   createNewStatus() {
     var status: Status = {
       title: '',
-      creation: '',
-      last_update: '',
+      //creation: '',
+      //last_update: '',
       text: ''
     };
 
